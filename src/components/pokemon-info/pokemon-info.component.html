@@ -1,0 +1,41 @@
+<div class="border w-100 mt-5 p-2">
+  <div ng-if="!$ctrl.loading">
+    <div class="d-flex justify-content-center">
+      <img ng-src="{{$ctrl.pokemon.sprites.other.dream_world.front_default || $ctrl.pokemon.sprites.front_default}}"
+        alt="{{$ctrl.pokemon.name}}" width="100">
+    </div>
+    <div class="d-flex justify-content-center mt-2">
+      <h2>{{$ctrl.pokemon.name}}</h2>
+    </div>
+    <div class="d-flex justify-content-center">
+      <span class="badge text-bg-info" ng-class="{'me-2': !$last}"
+        ng-repeat="type in $ctrl.pokemon.types">{{type.type.name}}</span>
+    </div>
+    <div class="d-flex mt-4 justify-content-center align-items-center">
+      <div class="w-50 text-center">
+        <h5>Altura</h5>
+        <p>{{$ctrl.pokemon.height}}</p>
+      </div>
+      <div class="w-50 text-center">
+        <h5>Peso</h5>
+        <p>{{$ctrl.pokemon.weight}}</p>
+      </div>
+    </div>
+    <div class="d-flex justify-content-center flex-column mt-3">
+      <h5 class="text-center">Estadísticas</h5>
+      <div class="mb-3" ng-repeat="stat in $ctrl.pokemon.stats">
+        <span>{{stat.stat.name | capitalize}}</span>
+        <div class="progress" role="progressbar" aria-label="Basic example"
+          aria-valuenow="{{$ctrl.calculateWidthBar(stat.base_stat)}}" aria-valuemin="0" style="height: 18px;">
+          <div class="progress-bar" ng-style="{'width': $ctrl.calculateWidthBar(stat.base_stat)}">
+            {{stat.base_stat}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-if="$ctrl.loading" class="d-flex justify-content-center align-items-center">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+</div>

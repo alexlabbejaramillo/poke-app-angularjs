@@ -1,0 +1,69 @@
+<div class="container pt-5 row m-auto">
+  <div class="col-12 col-sm-8 me-5">
+    <h4>Listado de Pokémon</h4>
+    <div class="mb-2">
+      <div class="form-group me-2 col-sm-6 col-12">
+        <input type="text" class="form-control" ng-model="$ctrl.textSearch" placeholder="Buscar por nombre"
+          ng-keyup="$ctrl.searchPokemon()" list="datalistOptions">
+
+        <datalist id="datalistOptions">
+          <option ng-value="poke.name" ng-repeat="poke in $ctrl.pokemonsDisplayed">
+        </datalist>
+      </div>
+    </div>
+    <div class="table-responsive" ng-if="!$ctrl.loading">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Imágen</th>
+            <th>Pokemon</th>
+            <th>Tipo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="poke in $ctrl.pokemonsDisplayed">
+            <td align="center"><img ng-src="{{poke.image1 || poke.image2}}" alt="{{poke.name}}"
+                width="{{poke.image1 ? 50 : 80}}" height="{{poke.image1 ? 50 : 80}}"></td>
+            <td><a ng-click="$ctrl.pokeSelected = poke.name" href="#">{{poke.name}}</a></td>
+            <td>
+              <span class="badge text-bg-info" ng-class="{'me-2': !$last}"
+                ng-repeat="type in poke.types">{{type}}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <nav>
+        <ul class="pagination justify-content-center">
+          <li class="page-item" ng-class="{'disabled': $ctrl.pagination.currentPage === 1}">
+            <a class="page-link" href="#" ng-click="$ctrl.setCurrentPage($ctrl.pagination.currentPage - 1)">Anterior</a>
+          </li>
+
+          <li class="page-item d-sm-inline d-none" ng-repeat="page in $ctrl.rangePagesNumbers() track by $index"
+            ng-class="{'active': ($ctrl.startIndexPage() + $index) === $ctrl.pagination.currentPage, 'disabled': $ctrl.pagination.totalPages === 1 && $ctrl.pagination.currentPage}">
+            <a class="page-link" href="#"
+              ng-click="$ctrl.setCurrentPage($ctrl.startIndexPage() + $index)">{{$ctrl.startIndexPage() +
+              $index}}</a>
+          </li>
+
+          <li class="page-item" ng-class="{'disabled': $ctrl.pagination.currentPage === $ctrl.pagination.totalPages}">
+            <a class="page-link" href="#"
+              ng-click="$ctrl.setCurrentPage($ctrl.pagination.currentPage + 1)">Siguiente</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div ng-if="$ctrl.loading" class="d-flex justify-content-center align-items-center" style="height: 500px;">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-3 col-12 d-flex flex-column">
+    <h4>Información de Pokémon</h4>
+    <pokemon-info ng-if="$ctrl.pokeSelected" poke-name="$ctrl.pokeSelected"></pokemon-info>
+
+    <div class="mt-4">
+      <pokemon-resumen></pokemon-resumen>
+    </div>
+  </div>
+</div>

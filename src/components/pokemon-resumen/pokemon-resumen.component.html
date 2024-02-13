@@ -1,0 +1,19 @@
+<div>
+  <h4>Resumen</h4>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Letra</th>
+          <th>Cant. Pokemon</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="resu in $ctrl.resumen">
+          <td><b>{{resu.letra}}</b></td>
+          <td>{{resu.cantidad}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
